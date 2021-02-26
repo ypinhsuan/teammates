@@ -38,6 +38,8 @@
     <div class="top-padded">
       <button class="btn btn-primary" id="add-instructor" (click)="validateAndAddInstructorDetail()">Add Instructor</button>
     </div>
+
+    <div class="top-padded" style="color: red" *ngIf="error.hasError">{{error.errorMessage}}</div>
   </div>
 </div>
 

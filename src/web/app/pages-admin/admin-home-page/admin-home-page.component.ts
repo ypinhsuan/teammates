@@ -33,6 +33,8 @@ export class AdminHomePageComponent {
 
   isAddingInstructors: boolean = false;
 
+  error:any = { hasError:false, errorMessage:'' };
+
   constructor(private accountService: AccountService) {}
 
   /**
@@ -68,8 +70,22 @@ export class AdminHomePageComponent {
   validateAndAddInstructorDetail(): void {
     if (!this.instructorName || !this.instructorEmail || !this.instructorInstitution) {
       // TODO handle error
+      this.error = { hasError:true, errorMessage:'Please fill in all the fields' };
       return;
     }
+
+    for (let i = 0; i < this.instructorsConsolidated.length; i++) {
+      const instructor: InstructorData = this.instructorsConsolidated[i];
+      if (this.instructorName === instructor.name 
+        && this.instructorEmail === instructor.email 
+        && this.instructorInstitution === instructor.institution) {
+        this.error = { hasError:true, errorMessage:'Instructor already added to Result section' };
+        return;    
+	  }
+	}
+
+    this.error = { hasError:false, errorMessage:'' };
+
     this.instructorsConsolidated.push({
       name: this.instructorName,
       email: this.instructorEmail,
